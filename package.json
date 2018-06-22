@@ -1,0 +1,17 @@
+{
+  "name": "bilibili-spider",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "silence960812@gmail.com",
+  "devDependencies": {
+    "async": "^2.6.1",
+    "babel-core": "^6.26.3",
+    "cheerio": "^1.0.0-rc.2",
+    "inquirer": "^5.2.0",
+    "md5": "^2.2.1",
+    "request": "^2.87.0",
+    "superagent": "^3.8.3"
+  }
+}
