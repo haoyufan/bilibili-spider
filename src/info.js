@@ -125,6 +125,5 @@ function Brush(temp, callback) {
         });
     }, speed);
 };
-getVideoInfo(['https://www.bilibili.com/video/av24249698', "https://www.bilibili.com/video/av23018784"], 'info', true)
-
-// module.exports = getVideoInfo;
+// getVideoInfo(['https://www.bilibili.com/video/av24249698', "https://www.bilibili.com/video/av23018784"], 'info', true)
+module.exports = getVideoInfo;
