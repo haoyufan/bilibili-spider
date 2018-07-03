@@ -1,25 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
-const request = require('request');
+const superagent = require('superagent');
 const { mapLimit, waterfall } = require('async');
 const { fetch, get_sign } = require('./config/utils');
-const { statUrl, appkey, appsec, video_info_url } = require('./config/index');
+const { statUrl, appkey, appsec, video_info_url, header } = require('./config/index');
 let video_info_url_params = {
     cid: null,
     appkey: appkey,
     otype: 'json',
     type: '',
-    quality: 80,
-    qn: 80
+    quality: 112,
+    qn: 112
 }
 let vudeoList = [];
 const isFile = file => fs.lstatSync(file).isFile();
 const isDir = file => fs.lstatSync(file).isDirectory();
-const dirname = `../data/video/`;
+const dirname = `./data/video/`;
 let isDownload = false;
 
-function getVideoInfo(data, name, download) {
+function getVideoInfo(data, name, download = false) {
     if(data[0] === ''){
         console.log('视频链接不能为空');
         return
@@ -40,7 +40,7 @@ function getVideoInfo(data, name, download) {
             if(fs.existsSync(file) && fs.statSync(file).isFile()){
                 let rendFile = JSON.parse(fs.readFileSync(file, 'utf-8'));
                 let rendFileLength = Object.keys(rendFile) || 'data'
-                 rendFile[rendFileLength[rendFileLength.length - 1] +=1] = 1111;
+                 rendFile[rendFileLength[rendFileLength.length - 1] +=1] = vudeoList;
                 fs.writeFileSync(file,`${JSON.stringify(rendFile)}` , 'utf-8')
             } else {
                 fs.writeFileSync(file,`{"data": ${JSON.stringify(vudeoList)},}` , 'utf-8')
@@ -91,10 +91,14 @@ function Brush(temp, callback) {
                 const videoUrl = videoSinger.durl[0];
                 if(isDownload) {
                     if (!fs.existsSync(dirname)) {
-                        fs.mkdirSync(dirname);
+                        fs.mkdirSync(path.resolve(dirname));
                     }
                     var file = fs.createWriteStream(path.resolve(dirname, `./${urlInfo.aid}.flv`))
-                    request({url: videoUrl.url }).pipe(file);
+                    console.log(`视频下载开始`, option.arcurl)
+                    const req = superagent
+                        .get(videoUrl.url)
+                        .set(header)
+                        .pipe(file)
                     file.on('finish', function () {
                         console.log(`视频下载完毕`, option.arcurl)
                         next(null, urlInfo, videoInfo, videoSinger);
@@ -121,6 +125,6 @@ function Brush(temp, callback) {
         });
     }, speed);
 };
-// getVideoInfo(['https://www.bilibili.com/video/av170001', "https://www.bilibili.com/video/av23018784"])
+getVideoInfo(['https://www.bilibili.com/video/av24249698', "https://www.bilibili.com/video/av23018784"], 'info', true)
 
-module.exports = getVideoInfo;
+// module.exports = getVideoInfo;
