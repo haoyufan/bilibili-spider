@@ -68,7 +68,8 @@ function Brush(temp, callback) {
                 fetch(option.arcurl)
                     .then(({text}) => {
                         const $ = cheerio.load(text)
-                        const urlInfo = JSON.parse($('script')[2].children[0].data.split(';(')[0].substring(25));
+                        const urlInfo = JSON.parse($('script')[3].children[0].data.split(';(')[0].substring(25));
+                        console.log()
                         next(null, urlInfo);
                     })
             },
@@ -93,7 +94,7 @@ function Brush(temp, callback) {
                     if (!fs.existsSync(dirname)) {
                         fs.mkdirSync(path.resolve(dirname));
                     }
-                    var file = fs.createWriteStream(path.resolve(dirname, `./${urlInfo.aid}.flv`))
+                    var file = fs.createWriteStream(path.resolve(dirname, `./${urlInfo.videoData.title}.flv`))
                     console.log(`视频下载开始`, option.arcurl)
                     const req = superagent
                         .get(videoUrl.url)
@@ -125,5 +126,5 @@ function Brush(temp, callback) {
         });
     }, speed);
 };
-// getVideoInfo(['https://www.bilibili.com/video/av24249698', "https://www.bilibili.com/video/av23018784"], 'info', true)
+// getVideoInfo(["https://www.bilibili.com/video/av16973517"], 'info', true)
 module.exports = getVideoInfo;
