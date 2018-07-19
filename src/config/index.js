@@ -11,7 +11,7 @@ module.exports = {
         'origin': 'https://www.bilibili.com',
         'Connection': 'keep-alive',
         'Accept-Encoding': 'gzip, deflate, br',
-        'Referer': 'https://www.bilibili.com/video/av43108318'
+        'Referer': 'https://www.bilibili.com/'
     },
     quality_display_names: {
         112: '高清 1080P+',

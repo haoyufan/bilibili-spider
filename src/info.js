@@ -69,46 +69,15 @@ function Brush(temp, callback) {
                     .then(({text}) => {
                         const $ = cheerio.load(text)
                         const urlInfo = JSON.parse($('script')[3].children[0].data.split(';(')[0].substring(25));
-                        console.log()
                         next(null, urlInfo);
-                    })
+                })
             },
             (urlInfo, next) =>{
-                fetch(statUrl + option.aid)
-                    .then(({body}) => {
-                        next(null,urlInfo, body.data);
-                    })
+                downFile(option, urlInfo, (videoSinger) => {
+                    next(null,urlInfo, videoSinger)
+                })
             },
-            (urlInfo,videoInfo,next) =>{
-                video_info_url_params.cid = urlInfo.videoData.pages[0].cid;
-                const url = video_info_url + get_sign(video_info_url_params, appsec);
-                fetch(url)
-                    .then(({body}) => {
-                        next(null,urlInfo,videoInfo,body);
-                    })
-            },
-            // 下载
-            (urlInfo, videoInfo, videoSinger, next) => {
-                const videoUrl = videoSinger.durl[0];
-                if(isDownload) {
-                    if (!fs.existsSync(dirname)) {
-                        fs.mkdirSync(path.resolve(dirname));
-                    }
-                    var file = fs.createWriteStream(path.resolve(dirname, `./${urlInfo.videoData.title}.flv`))
-                    console.log(`视频下载开始`, option.arcurl)
-                    const req = superagent
-                        .get(videoUrl.url)
-                        .set(header)
-                        .pipe(file)
-                    file.on('finish', function () {
-                        console.log(`视频下载完毕`, option.arcurl)
-                        next(null, urlInfo, videoInfo, videoSinger);
-                    })
-                }else{
-                    next(null, urlInfo, videoInfo, videoSinger);
-                }
-            }
-        ], function (err, urlInfo, videoInfo, videoSinger) {
+        ], function (err, urlInfo, videoSinger) {
             let data = {
                 arcurl: option.arcurl,
             };
@@ -119,12 +88,55 @@ function Brush(temp, callback) {
                 data.duration = option.duration;
             }
 
-            data = Object.assign({}, data, videoInfo, urlInfo, videoSinger);
+            data = Object.assign({}, data, urlInfo, videoSinger);
             vudeoList.push(data);
             console.log(`视频数据处理完毕：`, option.arcurl);
             callback(null, data);
         });
     }, speed);
-};
-// getVideoInfo(["https://www.bilibili.com/video/av16973517"], 'info', true)
+}
+
+function downFile(object,video ,cb) {
+
+    mapLimit(video.videoData.pages,4,
+        (videoInfo, fallback) => {
+            waterfall([
+                (next) =>{
+                    video_info_url_params.cid = videoInfo.cid;
+                    const url = video_info_url + get_sign(video_info_url_params, appsec);
+                    fetch(url)
+                        .then(({body}) => {
+                            next(null, body);
+                        })
+                },
+                // 下载
+                (videoSinger,next) => {
+                    const videoUrl = videoSinger.durl[0];
+                    if(isDownload) {
+                        if (!fs.existsSync(dirname)) {
+                            fs.mkdirSync(path.resolve(dirname));
+                        }
+                        const file = fs.createWriteStream(path.resolve(dirname, `./${`${videoInfo.part }-${videoInfo.cid}`}.flv`))
+                        console.log(`视频下载开始`, videoInfo.part);
+                        superagent
+                            .get(videoUrl.url)
+                            .set(header)
+                            .pipe(file)
+                        file.on('finish', function () {
+                            console.log(`视频下载完毕`, videoInfo.part)
+                            next(null, videoSinger);
+                        })
+                    }else{
+                        next(null,videoSinger);
+                    }
+                }
+            ], function (err, videoSinger) {
+                fallback(null, videoSinger)
+            })
+    },
+        (err, videoSinger) => {
+            cb(video, videoSinger)
+        });
+}
+// getVideoInfo(["https://www.bilibili.com/video/av8225693"], 'info', true)
 module.exports = getVideoInfo;
