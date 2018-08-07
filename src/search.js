@@ -29,8 +29,7 @@ async function SearchList(url) {
         console.log(`搜索列表获取完成，总共${searchListData.length}条`)
         console.log('5秒钟后开始获取视频信息')
         const time = setTimeout(() => {
-            console.log(searchListData)
-            // getVideoInfo(searchListData, keyWord, isDownload)
+            getVideoInfo(searchListData, keyWord, isDownload)
         }, 5000)
         return
     }
