@@ -26,6 +26,6 @@ module.exports = {
     video_info_url: 'https://interface.bilibili.com/v2/playurl?',
     appkey: '84956560bc028eb7',
     appsec: '94aba54af9065f71de72f5508f1cd42e',
-    searchUrl: `https://search.bilibili.com/api/search?search_type=video&from_source=banner_search&order=${sort['最多点击']}&duration=0&tids=0`,
+    searchUrl: `https://api.bilibili.com/x/web-interface/search/type?search_type=video&jsonp=jsonp&order=${sort['最多点击']}&duration=0&tids=0&highlight=1`,
     list: 'https://api.bilibili.com/x/player/pagelist?jsonp=jsonp&aid='
 }
