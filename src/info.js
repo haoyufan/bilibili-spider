@@ -116,7 +116,7 @@ function downFile(object,video ,cb) {
                         if (!fs.existsSync(dirname)) {
                             fs.mkdirSync(path.resolve(dirname));
                         }
-                        const file = fs.createWriteStream(path.resolve(dirname, `./${`${videoInfo.part }-${videoInfo.cid}`}.flv`))
+                        const file = fs.createWriteStream(path.resolve(dirname, `./${`${video.videoData.title} - ${videoInfo.part }-${videoInfo.cid}`}.flv`))
                         console.log(`视频下载开始`, videoInfo.part);
                         superagent
                             .get(videoUrl.url)
@@ -138,5 +138,4 @@ function downFile(object,video ,cb) {
             cb(video, videoSinger)
         });
 }
-// getVideoInfo(["https://www.bilibili.com/video/av8225693"], 'info', true)
 module.exports = getVideoInfo;

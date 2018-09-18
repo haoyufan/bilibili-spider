@@ -1,8 +1,10 @@
 {
   "name": "bilibili-spider",
   "version": "1.0.0",
+  "main":  "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "cross-env NODE_ENV=development node index.js --debug"
   },
   "author": "silence960812@gmail.com",
   "devDependencies": {
@@ -13,5 +15,9 @@
     "md5": "^2.2.1",
     "request": "^2.87.0",
     "superagent": "^3.8.3"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "yargs": "^12.0.2"
   }
 }
