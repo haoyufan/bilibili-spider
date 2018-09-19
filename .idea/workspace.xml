@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="487a4393-11bb-47d4-a8eb-306a2b9d3169" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/bilibili/info.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Gadna poroda-270380.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Imash li surce-275431.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Kak boli-280469.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Lud me Pravish-275430.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Mrazish-267410.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - No Kazvam Ti Stiga-279787.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Obicham Te-274491.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Samo za teb-280467.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Tochno sega-280468.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Няма накъде-267714.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Удряй ме-272861.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/【MV】保加利亚妖王AZIS视频合辑 - Хоп-279786.flv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/bilibili/video/你们喜欢的音乐老师韩可彬高清完整版 - -36973988.flv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/index.js" afterPath="$PROJECT_DIR$/index.js" />
+      <change beforePath="$PROJECT_DIR$/src/search.js" afterPath="$PROJECT_DIR$/src/search.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,40 +16,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="48" column="32" lean-forward="false" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="info.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/info.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="28" column="26" lean-forward="false" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
-              <folding>
-                <element signature="e#354#455#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="throw.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/explain/throw.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -84,12 +37,12 @@
       <list>
         <option value="$PROJECT_DIR$/data/牛.json" />
         <option value="$PROJECT_DIR$/src/config/index.js" />
-        <option value="$PROJECT_DIR$/src/search.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/explain/throw.js" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/src/info.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/src/search.js" />
       </list>
     </option>
   </component>
@@ -137,7 +90,7 @@
             <path>
               <item name="bi" type="b2602c69:ProjectViewProjectNode" />
               <item name="bi" type="462c0819:PsiDirectoryNode" />
-              <item name="explain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -214,13 +167,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15871000" />
+    <option name="totallyTimeSpent" value="16253000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24851191" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24851191" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -599,13 +551,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/search.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/explain/throw.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -614,20 +559,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="58" column="33" lean-forward="false" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/info.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="28" column="26" lean-forward="false" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+        <state relative-caret-position="-189">
+          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#354#455#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
+    <entry file="file://$PROJECT_DIR$/src/search.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="48" column="32" lean-forward="false" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
+        <state relative-caret-position="682">
+          <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="24" />
           <folding />
         </state>
       </provider>

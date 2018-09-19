@@ -33,11 +33,6 @@ const infoList = [
         name: 'url',
     },
     {
-        type: 'input',
-        message: '输入文件名称',
-        name: 'fileName',
-    },
-    {
         type: 'confirm',
         message: '是否下载:',
         name: 'download',
@@ -46,7 +41,7 @@ const infoList = [
 const node_env = process.env.NODE_ENV;
 
 if(node_env === 'development' || !!debug){
-    info([170001], 'info', true)
+    info([170001], true)
 }else {
     inquirer.prompt(list)
         .then(function (answers) {
@@ -61,7 +56,7 @@ if(node_env === 'development' || !!debug){
                 inquirer.prompt(infoList)
                     .then(function (infoInquirer) {
                         let url = infoInquirer.url.split(',');
-                        info(url, infoInquirer.fileName, infoInquirer.download)
+                        info(url, infoInquirer.download)
                     })
             }
         })
