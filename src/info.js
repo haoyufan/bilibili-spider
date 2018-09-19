@@ -16,36 +16,21 @@ let video_info_url_params = {
 let vudeoList = [];
 const isFile = file => fs.lstatSync(file).isFile();
 const isDir = file => fs.lstatSync(file).isDirectory();
-const dirname = `./data/video/`;
+const root =  '.'|| process.argv[2];
+const dirname = root  + `/bilibili`;
 let isDownload = false;
 
-function getVideoInfo(data, name, download = false) {
+function getVideoInfo(data, download = false) {
     if(data[0] === ''){
         console.log('视频链接不能为空');
         return
-    }
-    if(typeof data[0] !== 'object'){
-        if(!/^https:\/\/www\.bilibili\.com\/video\/av[0-9]+/.test(data[0])){
-            console.log('输入链接不正确！')
-            return
-        }
     }
 
     isDownload = download;
     mapLimit(data,2,
         Brush,
         (err,result) => {
-            const file = `./data/${name || 'info'}.json`;
-            console.log('视频信息检索完毕,开始写入文件.' + file)
-            if(fs.existsSync(file) && fs.statSync(file).isFile()){
-                let rendFile = JSON.parse(fs.readFileSync(file, 'utf-8'));
-                let rendFileLength = Object.keys(rendFile) || 'data'
-                 rendFile[rendFileLength[rendFileLength.length - 1] +=1] = vudeoList;
-                fs.writeFileSync(file,`${JSON.stringify(rendFile)}` , 'utf-8')
-            } else {
-                fs.writeFileSync(file,`{"data": ${JSON.stringify(vudeoList)},}` , 'utf-8')
-            }
-            console.log('文件写入完毕.')
+            console.log('视频信息检索完毕,视频保存地址.' + dirname)
         })
 };
 
@@ -54,23 +39,26 @@ function Brush(temp, callback) {
     if(typeof temp === 'object') {
         option = temp;
     } else {
-        option.arcurl = temp;
+        option.aid = temp;
     }
     const speed =  Math.ceil(Math.random(100) * 500 + 500);
     let time;
     console.log(`${speed}毫秒后开始获取数据！`)
     time = setTimeout(() => {
-        console.log(`开始获取视频信息：`, option.arcurl)
+        console.log(`开始获取视频信息：`, option.aid)
         clearTimeout(time);
         waterfall([
             (next) => {
                 // 获取 cid
-                fetch(option.arcurl)
+                fetch('https://www.bilibili.com/video/av' + option.aid)
                     .then(({text}) => {
                         const $ = cheerio.load(text)
                         const urlInfo = JSON.parse($('script')[3].children[0].data.split(';(')[0].substring(25));
                         next(null, urlInfo);
-                })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
             },
             (urlInfo, next) =>{
                 downFile(option, urlInfo, (videoSinger) => {
@@ -78,9 +66,7 @@ function Brush(temp, callback) {
                 })
             },
         ], function (err, urlInfo, videoSinger) {
-            let data = {
-                arcurl: option.arcurl,
-            };
+            let data = {};
 
             if(typeof temp === 'object'){
                 data.title = option.title;
@@ -108,22 +94,25 @@ function downFile(object,video ,cb) {
                         .then(({body}) => {
                             next(null, body);
                         })
+                        .catch((err) => {
+                            console.log(err)
+                        })
                 },
                 // 下载
                 (videoSinger,next) => {
                     const videoUrl = videoSinger.durl[0];
                     if(isDownload) {
                         if (!fs.existsSync(dirname)) {
-                            fs.mkdirSync(path.resolve(dirname));
+                            fs.mkdirSync(dirname);
                         }
                         const file = fs.createWriteStream(path.resolve(dirname, `./${`${video.videoData.title} - ${videoInfo.part }-${videoInfo.cid}`}.flv`))
-                        console.log(`视频下载开始`, videoInfo.part);
+                        console.log(`视频下载开始`, `${video.videoData.title}-${videoInfo.part}`);
                         superagent
                             .get(videoUrl.url)
                             .set(header)
                             .pipe(file)
                         file.on('finish', function () {
-                            console.log(`视频下载完毕`, videoInfo.part)
+                            console.log(`视频下载完毕`, `${video.videoData.title}-${videoInfo.part}`);
                             next(null, videoSinger);
                         })
                     }else{

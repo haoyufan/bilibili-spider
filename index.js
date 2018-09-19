@@ -46,7 +46,7 @@ const infoList = [
 const node_env = process.env.NODE_ENV;
 
 if(node_env === 'development' || !!debug){
-    info(["https://www.bilibili.com/video/av22327921"], 'info', true)
+    info([170001], 'info', true)
 }else {
     inquirer.prompt(list)
         .then(function (answers) {
@@ -56,7 +56,7 @@ if(node_env === 'development' || !!debug){
                     search(searchInquirer.keyWord, searchInquirer.download)
                 })
             }else{
-                console.log('输入url链接, 多个之间“,”隔开(ps："https://www.bilibili.com/video/av170001")')
+                console.log('输入B站视频id, 多个之间“,”隔开(ps："170001")');
                 // 获取单个
                 inquirer.prompt(infoList)
                     .then(function (infoInquirer) {
