@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const inquirer = require('inquirer');
 const info = require('./src/info');
 const search = require('./src/search');

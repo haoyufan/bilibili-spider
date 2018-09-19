@@ -6,6 +6,9 @@
     "start": "node index.js",
     "dev": "cross-env NODE_ENV=development node index.js --debug"
   },
+  "bin": {
+    "bili": "./index.js"
+  },
   "author": "silence960812@gmail.com",
   "devDependencies": {
     "async": "^2.6.1",
