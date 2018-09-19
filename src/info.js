@@ -3,7 +3,8 @@ const path = require('path');
 const cheerio = require('cheerio');
 const superagent = require('superagent');
 const { mapLimit, waterfall } = require('async');
-const { fetch, get_sign } = require('./config/utils');
+const ProgressBar = require('progress');
+const { fetch, get_sign, percent, Progress } = require('./config/utils');
 const { statUrl, appkey, appsec, video_info_url, header } = require('./config/index');
 let video_info_url_params = {
     cid: null,
@@ -101,18 +102,40 @@ function downFile(object,video ,cb) {
                 // 下载
                 (videoSinger,next) => {
                     const videoUrl = videoSinger.durl[0];
+                    let size = undefined,
+                        chunks = 0;
+
                     if(isDownload) {
                         if (!fs.existsSync(dirname)) {
                             fs.mkdirSync(dirname);
                         }
+
                         const file = fs.createWriteStream(path.resolve(dirname, `./${`${video.videoData.title} - ${videoInfo.part }-${videoInfo.cid}`}.flv`))
-                        console.log(`视频下载开始`, `${video.videoData.title}-${videoInfo.part}`);
+                        const title = `${video.videoData.title}-${videoInfo.part}`
+
+                        console.log(`视频下载开始`, title);
+
                         superagent
                             .get(videoUrl.url)
                             .set(header)
+                            .on('response', (response) => {
+                                size = parseInt(response.headers['content-length'], 10);;
+                                // const bar = new ProgressBar(`  ${title} [:bar] :rate/bps :percent :etas`, {
+                                //     complete: '=',
+                                //     incomplete: ' ',
+                                //     width: 20,
+                                //     total: size
+                                // });
+                                response.on('data', function(chunk) {
+                                    // bar.tick(chunk.length);
+                                    chunks += chunk.length;
+                                    percent(chunks / size)
+                                    Progress(`${title}下载进度`, { completed: chunks, total: size })
+                                });
+                            })
                             .pipe(file)
                         file.on('finish', function () {
-                            console.log(`视频下载完毕`, `${video.videoData.title}-${videoInfo.part}`);
+                            console.log(`视频下载完毕`, title);
                             next(null, videoSinger);
                         })
                     }else{

@@ -41,7 +41,7 @@ const infoList = [
 const node_env = process.env.NODE_ENV;
 
 if(node_env === 'development' || !!debug){
-    info([170001], true)
+    info([23018784], true)
 }else {
     inquirer.prompt(list)
         .then(function (answers) {
