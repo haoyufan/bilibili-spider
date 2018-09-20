@@ -28,10 +28,13 @@ function getVideoInfo(data, download = false) {
     }
 
     isDownload = download;
-    mapLimit(data,2,
+    mapLimit(data,10,
         Brush,
         (err,result) => {
-            console.log('视频信息检索完毕,视频保存地址.' + dirname)
+            console.log('视频信息检索完毕,视频保存地址.' +process.cwd() + dirname);
+            const file = dirname + `./${result[0].videoData.title || 'info'}.json`;
+            fs.writeFileSync(file,`{"data": ${JSON.stringify(vudeoList)},}` , 'utf-8')
+            console.log('文件写入完毕.')
         })
 };
 
@@ -52,9 +55,11 @@ function Brush(temp, callback) {
             (next) => {
                 // 获取 cid
                 fetch('https://www.bilibili.com/video/av' + option.aid)
-                    .then(({text}) => {
-                        const $ = cheerio.load(text)
-                        const urlInfo = JSON.parse($('script')[3].children[0].data.split(';(')[0].substring(25));
+                    .then(async({text}) => {
+                        const $ = await cheerio.load(text)
+                        const dataStr = $('script')[3].children[0].data;
+                        const data = dataStr.split(';(function')[0].substring(25);
+                        const urlInfo = JSON.parse(data);
                         next(null, urlInfo);
                     })
                     .catch((err) => {
@@ -62,9 +67,13 @@ function Brush(temp, callback) {
                     })
             },
             (urlInfo, next) =>{
-                downFile(option, urlInfo, (videoSinger) => {
-                    next(null,urlInfo, videoSinger)
-                })
+                if(isDownload){
+                    downFile(option, urlInfo, (videoSinger) => {
+                        next(null,urlInfo, videoSinger)
+                    })
+                }else{
+                    next(null,urlInfo, {})
+                }
             },
         ], function (err, urlInfo, videoSinger) {
             let data = {};
@@ -77,7 +86,7 @@ function Brush(temp, callback) {
 
             data = Object.assign({}, data, urlInfo, videoSinger);
             vudeoList.push(data);
-            console.log(`视频数据处理完毕：`, option.arcurl);
+            console.log(`视频数据处理完毕：`, option.aid);
             callback(null, data);
         });
     }, speed);
@@ -105,42 +114,37 @@ function downFile(object,video ,cb) {
                     let size = undefined,
                         chunks = 0;
 
-                    if(isDownload) {
-                        if (!fs.existsSync(dirname)) {
-                            fs.mkdirSync(dirname);
-                        }
-
-                        const file = fs.createWriteStream(path.resolve(dirname, `./${`${video.videoData.title} - ${videoInfo.part }-${videoInfo.cid}`}.flv`))
-                        const title = `${video.videoData.title}-${videoInfo.part}`
-
-                        console.log(`视频下载开始`, title);
-
-                        superagent
-                            .get(videoUrl.url)
-                            .set(header)
-                            .on('response', (response) => {
-                                size = parseInt(response.headers['content-length'], 10);;
-                                // const bar = new ProgressBar(`  ${title} [:bar] :rate/bps :percent :etas`, {
-                                //     complete: '=',
-                                //     incomplete: ' ',
-                                //     width: 20,
-                                //     total: size
-                                // });
-                                response.on('data', function(chunk) {
-                                    // bar.tick(chunk.length);
-                                    chunks += chunk.length;
-                                    percent(chunks / size)
-                                    Progress(`${title}下载进度`, { completed: chunks, total: size })
-                                });
-                            })
-                            .pipe(file)
-                        file.on('finish', function () {
-                            console.log(`视频下载完毕`, title);
-                            next(null, videoSinger);
-                        })
-                    }else{
-                        next(null,videoSinger);
+                    if (!fs.existsSync(dirname)) {
+                        fs.mkdirSync(dirname);
                     }
+
+                    const file = fs.createWriteStream(path.resolve(dirname, `./${`${video.videoData.title} - ${videoInfo.part }-${videoInfo.cid}`}.flv`))
+                    const title = `${video.videoData.title}-${videoInfo.part}`
+
+                    console.log(`视频下载开始`, title);
+                    superagent
+                        .get(videoUrl.url)
+                        .set(header)
+                        .on('response', (response) => {
+                            size = parseInt(response.headers['content-length'], 10);;
+                            // const bar = new ProgressBar(`  ${title} [:bar] :rate/bps :percent :etas`, {
+                            //     complete: '=',
+                            //     incomplete: ' ',
+                            //     width: 20,
+                            //     total: size
+                            // });
+                            response.on('data', function(chunk) {
+                                // bar.tick(chunk.length);
+                                chunks += chunk.length;
+                                percent(chunks / size)
+                                Progress(`${title}下载进度`, { completed: chunks, total: size })
+                            });
+                        })
+                        .pipe(file)
+                    file.on('finish', function () {
+                        console.log(`视频下载完毕`, title);
+                        next(null, videoSinger);
+                    })
                 }
             ], function (err, videoSinger) {
                 fallback(null, videoSinger)
