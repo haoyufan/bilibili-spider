@@ -127,17 +127,17 @@ function downFile(object,video ,cb) {
                         .set(header)
                         .on('response', (response) => {
                             size = parseInt(response.headers['content-length'], 10);;
-                            // const bar = new ProgressBar(`  ${title} [:bar] :rate/bps :percent :etas`, {
-                            //     complete: '=',
-                            //     incomplete: ' ',
-                            //     width: 20,
-                            //     total: size
-                            // });
+                            const bar = new ProgressBar(`  ${title} [:bar] :rate/bps :percent :etas`, {
+                                complete: '=',
+                                incomplete: ' ',
+                                width: 20,
+                                total: size
+                            });
                             response.on('data', function(chunk) {
-                                // bar.tick(chunk.length);
-                                chunks += chunk.length;
-                                percent(chunks / size)
-                                Progress(`${title}下载进度`, { completed: chunks, total: size })
+                                bar.tick(chunk.length);
+                                // chunks += chunk.length;
+                                // percent(chunks / size)
+                                // Progress(`${title}下载进度`, { completed: chunks, total: size })
                             });
                         })
                         .pipe(file)
