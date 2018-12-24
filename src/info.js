@@ -128,13 +128,13 @@ function downFile(object,video ,cb) {
                         .on('response', (response) => {
                             size = parseInt(response.headers['content-length'], 10);;
                             const bar = new ProgressBar(`  ${title} [:bar] :rate/bps :percent :etas`, {
-                                complete: '=',
-                                incomplete: ' ',
+                                complete: '█',
+                                incomplete: '░',
                                 width: 20,
-                                total: size
+                                total: size,
                             });
                             response.on('data', function(chunk) {
-                                bar.tick(chunk.length);
+                                bar.tick(chunk.length)
                                 // chunks += chunk.length;
                                 // percent(chunks / size)
                                 // Progress(`${title}下载进度`, { completed: chunks, total: size })
