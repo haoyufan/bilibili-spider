@@ -33,9 +33,9 @@ function getVideoInfo(data, download = false) {
     Brush,
     (err, result) => {
       console.log('视频信息检索完毕,视频保存地址.' + process.cwd() + dirname);
-      const file = dirname + `./${result[0].videoData.title || 'info'}.json`;
-      fs.writeFileSync(file, `{"data": ${JSON.stringify(vudeoList)},}`, 'utf-8')
-      console.log('文件写入完毕.')
+      // const file = dirname + `./${result[0].videoData.title || 'info'}.json`;
+      // fs.writeFileSync(file, `{"data": ${JSON.stringify(vudeoList)},}`, 'utf-8')
+      // console.log('文件写入完毕.')
     })
 };
 
