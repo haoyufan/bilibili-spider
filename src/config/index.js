@@ -25,7 +25,7 @@ module.exports = {
     statUrl: 'https://api.bilibili.com/x/web-interface/archive/stat?aid=',
     video_info_url: 'https://interface.bilibili.com/v2/playurl?',
     appkey: '84956560bc028eb7',
-    appsec: '94aba54af9065f71de72f5508f1cd42e',
+    appsec: 'fdff75e5dda5a94d03aa77abf7ee7c81',
     searchUrl: `https://api.bilibili.com/x/web-interface/search/type?search_type=video&jsonp=jsonp&order=${sort['最多点击']}&duration=0&tids=0&highlight=1`,
     list: 'https://api.bilibili.com/x/player/pagelist?jsonp=jsonp&aid='
 }
